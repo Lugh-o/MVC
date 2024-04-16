@@ -1,0 +1,8 @@
+{
+    "name":"lugho/mvc",
+    "autoload":{
+        "psr-4":{
+            "app\\": "app"
+        }
+    }
+}
