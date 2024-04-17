@@ -10,11 +10,9 @@ class Home extends Page{
         $obOrganization = new Organization;
 
         $content = View::render('pages/home',[
-            'name' => $obOrganization->name,
-            'description' => $obOrganization->description,
-            'site' => $obOrganization->site
+            'name' => $obOrganization->name
         ]);
-        return parent::getPage('WDEV - Canal - Home', $content);
+        return parent::getPage('Home', $content);
     }
 }
 
