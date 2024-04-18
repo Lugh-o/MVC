@@ -11,19 +11,23 @@ $obRouter->get('/', [
 ]);
 
 //rota sobre
-$obRouter->get('/about', [
+$obRouter->get('/sobre', [
     function(){
         return new Response(200, pages\about::getAbout());
     }
 ]);
 
-//rota dinâmica
-$obRouter->get('/pagina/{idPagina}/{acao}', [
-    function($idPagina, $acao){
-        return new Response(200, 'Página '.$idPagina.' - '.$acao);
+//rota depoimentos
+$obRouter->get('/depoimentos', [
+    function(){
+        return new Response(200, pages\testimony::getTestimonies());
     }
 ]);
 
+//rota depoimentos (INSERT)
+$obRouter->post('/depoimentos', [
+    function($request){
+        return new Response(200, pages\testimony::insertTestimony($request));
+    }
+]);
 
-
-?>

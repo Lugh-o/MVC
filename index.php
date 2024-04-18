@@ -1,14 +1,9 @@
 <?php 
-require './vendor/autoload.php';
+
+require __DIR__.'/includes/app.php';
+
 
 use \app\Http\Router;
-use \app\utils\View;
-
-define('URL', 'http://localhost:8000');
-
-View::init([
-    'URL' => URL
-]);
 
 $obRouter = new Router(URL);
 

@@ -21,7 +21,6 @@ class Page{
         return View::render('pages/footer');
     }
 
-
     /**
      * Método responsável por retornar o conteúdo {view} da nossa página genérica
      * @return string

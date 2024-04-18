@@ -11,6 +11,11 @@ class ComposerStaticInitafe0e42dc9362ee0fb4de4a4f04b900d
         array (
             'app\\' => 4,
         ),
+        'W' => 
+        array (
+            'WilliamCosta\\DotEnv\\' => 20,
+            'WilliamCosta\\DatabaseManager\\' => 29,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -18,14 +23,18 @@ class ComposerStaticInitafe0e42dc9362ee0fb4de4a4f04b900d
         array (
             0 => __DIR__ . '/../..' . '/app',
         ),
+        'WilliamCosta\\DotEnv\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/william-costa/dot-env/src',
+        ),
+        'WilliamCosta\\DatabaseManager\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/william-costa/database-manager/src',
+        ),
     );
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'app\\Http\\Request' => __DIR__ . '/../..' . '/app/Http/Request.php',
-        'app\\Http\\Response' => __DIR__ . '/../..' . '/app/Http/Response.php',
-        'app\\Http\\Router' => __DIR__ . '/../..' . '/app/Http/Router.php',
-        'app\\utils\\View' => __DIR__ . '/../..' . '/app/utils/View.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
