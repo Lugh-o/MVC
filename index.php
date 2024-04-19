@@ -2,7 +2,6 @@
 
 require __DIR__.'/includes/app.php';
 
-
 use \app\Http\Router;
 
 $obRouter = new Router(URL);

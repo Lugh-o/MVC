@@ -35,6 +35,15 @@ class ComposerStaticInitafe0e42dc9362ee0fb4de4a4f04b900d
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'WilliamCosta\\DatabaseManager\\Database' => __DIR__ . '/..' . '/william-costa/database-manager/src/Database.php',
+        'WilliamCosta\\DatabaseManager\\Pagination' => __DIR__ . '/..' . '/william-costa/database-manager/src/Pagination.php',
+        'WilliamCosta\\DotEnv\\Environment' => __DIR__ . '/..' . '/william-costa/dot-env/src/Environment.php',
+        'app\\Http\\Request' => __DIR__ . '/../..' . '/app/Http/Request.php',
+        'app\\Http\\Response' => __DIR__ . '/../..' . '/app/Http/Response.php',
+        'app\\Http\\Router' => __DIR__ . '/../..' . '/app/Http/Router.php',
+        'app\\controller\\pages\\Testimony' => __DIR__ . '/../..' . '/app/controller/pages/Testimony.php',
+        'app\\model\\entity\\Testimony' => __DIR__ . '/../..' . '/app/model/entity/Testimony.php',
+        'app\\utils\\View' => __DIR__ . '/../..' . '/app/utils/View.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

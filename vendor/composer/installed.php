@@ -3,7 +3,7 @@
         'name' => 'lugho/mvc',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '8d44ab4424c06466a1a153efc619c7be40f8a62b',
+        'reference' => 'fb4dff0ed0e9ff43430748739db3ba5f16b296fc',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'lugho/mvc' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '8d44ab4424c06466a1a153efc619c7be40f8a62b',
+            'reference' => 'fb4dff0ed0e9ff43430748739db3ba5f16b296fc',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

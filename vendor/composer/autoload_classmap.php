@@ -7,4 +7,13 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'WilliamCosta\\DatabaseManager\\Database' => $vendorDir . '/william-costa/database-manager/src/Database.php',
+    'WilliamCosta\\DatabaseManager\\Pagination' => $vendorDir . '/william-costa/database-manager/src/Pagination.php',
+    'WilliamCosta\\DotEnv\\Environment' => $vendorDir . '/william-costa/dot-env/src/Environment.php',
+    'app\\Http\\Request' => $baseDir . '/app/Http/Request.php',
+    'app\\Http\\Response' => $baseDir . '/app/Http/Response.php',
+    'app\\Http\\Router' => $baseDir . '/app/Http/Router.php',
+    'app\\controller\\pages\\Testimony' => $baseDir . '/app/controller/pages/Testimony.php',
+    'app\\model\\entity\\Testimony' => $baseDir . '/app/model/entity/Testimony.php',
+    'app\\utils\\View' => $baseDir . '/app/utils/View.php',
 );

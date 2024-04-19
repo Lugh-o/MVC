@@ -7,9 +7,28 @@ use \app\model\entity\Testimony as EntityTestimony;
 
 class Testimony extends Page{
     
+    /**
+     * Metodo responsável por obter a renderização dos itens de depoimentos para a página
+     * @return string
+     */
+    private static function getTestimonyItems(){
+        $items = '';
+
+        $results = EntityTestimony::getTestimonies(null, 'id DESC');
+       
+        while($obTestimony = $results->fetchObject(EntityTestimony::class)){
+            $items .= View::render('pages/testimony/item',[
+                'nome' => $obTestimony->nome,
+                'mensagem' => $obTestimony->mensagem,
+                'data' => date('d/m/Y H:i:s', strtotime($obTestimony->data))
+            ]);
+        }
+        return $items;
+    }
+
     public static function getTestimonies(){
         $content = View::render('pages/testimonies',[
-
+            'items' => self::getTestimonyItems()
         ]);
         return parent::getPage('Depoimentos -> WDEV', $content);
     }

@@ -9,13 +9,12 @@ services:
     volumes:
       - ./:/var/www/html/
     ports:
-      - 8000:80
+      - 80:80
     links:
       - db
       
   db:
     image: mysql:latest
-    command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=password
@@ -28,7 +27,7 @@ services:
     image: phpmyadmin/phpmyadmin
     restart: always
     ports:
-      - 8001:80
+      - 81:80
     environment:
       - PMA_HOST=db
       - PMA_PORT=3306
