@@ -1,5 +1,5 @@
 <?php 
-namespace app\model\entity;
+namespace App\Model\Entity;
 
 use \WilliamCosta\DatabaseManager\Database;
 

@@ -1,5 +1,5 @@
 <?php 
-namespace app\model\entity;
+namespace App\Model\Entity;
 //exemplo de retorno do banco de dados
 class Organization {
     /**

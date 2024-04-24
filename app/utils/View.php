@@ -1,9 +1,8 @@
 <?php 
 
-namespace app\utils;
+namespace App\Utils;
 
-class View {
-
+class View{
     /**
      * Variáveis padrões da View
      * @var array
@@ -24,7 +23,7 @@ class View {
      * @return string
      */
     private static function getContentView($view){
-        $file = __DIR__.'/../../resources/view/'.$view.'.html';
+        $file = __DIR__.'/../../Resources/view/'.$view.'.html';
         return file_exists($file) ? file_get_contents($file) : '';
     }
 
@@ -48,4 +47,3 @@ class View {
     }
 
 }
-?>

@@ -1,8 +1,9 @@
 <?php 
 
-namespace app\controller\pages;
-use \app\utils\View;
-
+namespace app\Controller\Pages;
+use \app\Utils\View;
+use \app\Http\Request;
+use \WilliamCosta\DatabaseManager\Pagination;
 
 class Page{
     /**
@@ -11,6 +12,44 @@ class Page{
      */
     private static function getHeader(){
         return View::render('pages/header');
+    }
+
+    /**
+     * Método responsável por renderizar o layout de paginação
+     * @param Request
+     * @param Pagination
+     * @return string
+     */
+    public static function getPagination($request, $obPagination){
+        $pages = $obPagination->getPages();
+        
+        if(count($pages) <= 1) return '';
+
+        $links = '';
+
+        //URL atual sem gets
+        $url = $request->getRouter()->getCurrentUrl();
+        
+        //GET
+        $queryParams = $request->getQueryParams();
+        
+        foreach($pages as $page){
+            //altera a pagina
+            $queryParams['page'] = $page['page'];
+
+            $link = $url.'?'.http_build_query($queryParams);
+            
+            $links .= View::render('pages/pagination/link',[
+                'page' => $page['page'],
+                'link' => $link,
+                'active' => $page['current'] ? 'active' : ''
+            ]);
+        }
+
+        return View::render('pages/pagination/box',[
+            'links' => $links
+        ]);
+
     }
 
     /**
@@ -34,5 +73,3 @@ class Page{
         ]);
     }
 }
-
-?>

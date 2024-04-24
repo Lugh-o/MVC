@@ -1,8 +1,8 @@
 <?php 
 
-namespace app\controller\pages;
-use \app\utils\View;
-use \app\model\entity\Organization;
+namespace app\Controller\Pages;
+use \app\Utils\View;
+use \app\Model\Entity\Organization;
 
 class Home extends Page{
     
@@ -15,5 +15,3 @@ class Home extends Page{
         return parent::getPage('Home', $content);
     }
 }
-
-?>

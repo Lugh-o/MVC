@@ -1,20 +1,34 @@
 <?php 
 
-namespace app\controller\pages;
-use \app\utils\View;
+namespace app\Controller\Pages;
+use \app\Utils\View;
 use \app\Http\Request;
-use \app\model\entity\Testimony as EntityTestimony;
+
+use \app\Model\Entity\Testimony as EntityTestimony;
+use \WilliamCosta\DatabaseManager\Pagination;
 
 class Testimony extends Page{
     
     /**
      * Metodo responsável por obter a renderização dos itens de depoimentos para a página
+     * @param Request
+     * @param Pagination
      * @return string
      */
-    private static function getTestimonyItems(){
+    private static function getTestimonyItems($request, &$obPagination){
         $items = '';
 
-        $results = EntityTestimony::getTestimonies(null, 'id DESC');
+        //Quantidade total de registros
+        $quantidadeTotal = EntityTestimony::getTestimonies(null, null, null, 'COUNT(*) as qtd')->fetchObject()->qtd;
+
+        //Pagina atual
+        $queryParams = $request->getQueryParams();
+        $paginaAtual = $queryParams['page'] ?? 1;
+
+        //instancia de paginacao
+        $obPagination = new Pagination($quantidadeTotal, $paginaAtual, 3);
+
+        $results = EntityTestimony::getTestimonies(null, 'id DESC', $obPagination->getLimit());
        
         while($obTestimony = $results->fetchObject(EntityTestimony::class)){
             $items .= View::render('pages/testimony/item',[
@@ -26,9 +40,15 @@ class Testimony extends Page{
         return $items;
     }
 
-    public static function getTestimonies(){
+    /**
+     * Método responsável por retornar o conteúdo de depoimentos
+     * @param Request 
+     * @return string
+     */
+    public static function getTestimonies($request){
         $content = View::render('pages/testimonies',[
-            'items' => self::getTestimonyItems()
+            'items' => self::getTestimonyItems($request, $obPagination),
+            'pagination' => parent::getPagination($request, $obPagination)
         ]);
         return parent::getPage('Depoimentos -> WDEV', $content);
     }
@@ -45,7 +65,7 @@ class Testimony extends Page{
         $obTestimony->nome = $postVars['nome'];
         $obTestimony->mensagem = $postVars['mensagem'];
         $obTestimony->cadastrar();
-        return self::getTestimonies();
+        return self::getTestimonies($request);
     }
 
 }

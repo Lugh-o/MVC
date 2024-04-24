@@ -3,8 +3,8 @@ namespace app\Http;
 
 use \Closure;
 use \Exception;
-use Reflection;
 use \ReflectionFunction;
+use \app\Http\Middleware\Queue as MiddlewareQueue;
 
 class Router {
     /**
@@ -35,7 +35,7 @@ class Router {
      * @param string $url
      */
     public function __construct($url) {
-        $this->request = new Request();
+        $this->request = new Request($this);
         $this->url     = $url;
         $this->setPrefix();
     }
@@ -63,6 +63,9 @@ class Router {
                 continue;
             }
         }
+
+        //Middlewares da rota
+        $params['middlewares'] = $params['middlewares'] ?? [];
 
         //variaveis da rota
         $params['variables'] = [];
@@ -177,14 +180,21 @@ class Router {
                 $name = $parameter->getName();
                 $args[$name] = $route['variables'][$name] ?? '';
             }
-            // print_r($args);
 
-            return call_user_func_array($route['controller'], $args);
+            //RETORNA A EXECUCAO DA FILA DE MIDDLEWARES
+            return (new MiddlewareQueue($route['middlewares'], $route['controller'], $args))->next($this->request); 
 
         } catch(Exception $e){
             return new Response($e-> getCode(), $e->getMessage());
         }
     }
-    
+
+    /**
+     * Método responsável por retornar a URL atual
+     * @return string
+     */
+    public function getCurrentUrl(){
+        return $this->url.$this->getUri();
+    }
+ 
 }
-?>
