@@ -1,9 +1,9 @@
 <?php 
 
-namespace App\Http\Middleware;
+namespace app\Http\Middleware;
 
-use App\Http\Response;
-use App\Http\Request;
+use app\Http\Response;
+use app\Http\Request;
 
 class Queue {
 

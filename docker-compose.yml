@@ -16,14 +16,16 @@ services:
   db:
     image: mysql:latest
     restart: always
+    container_name: db
     environment:
       - MYSQL_ROOT_PASSWORD=password
-      - MYSQL_DATABASE=php_docker
+      - MYSQL_DATABASE=projetoMVC
       - MYSQL_PASSWORD=password
     volumes:
-      - /var/lib/mysql
+      - "./db:/docker-entrypoint-initdb.d/projetoMVC.sql" # this is how we persist a sql db even when container stops
       
   phpmyadmin:
+    container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin
     restart: always
     ports:
