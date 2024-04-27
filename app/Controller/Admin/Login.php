@@ -7,7 +7,6 @@ use app\Utils\View;
 use app\model\entity\User;
 use app\Session\Admin\Login as SessionAdminLogin;
 
-
 class Login extends Page {
  
     /**
@@ -18,9 +17,7 @@ class Login extends Page {
      */
     public static function getLogin($request, $errorMessage = null){
 
-        $status = !is_null($errorMessage) ? View::render('admin/login/status', [
-            'mensagem' => $errorMessage
-        ]) : '';
+        $status = !is_null($errorMessage) ? Alert::getError($errorMessage) : '';
 
         $content = View::render('admin/login', [
             'status' => $status

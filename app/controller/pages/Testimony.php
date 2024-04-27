@@ -3,7 +3,6 @@
 namespace app\Controller\Pages;
 use \app\Utils\View;
 use \app\Http\Request;
-
 use \app\Model\Entity\Testimony as EntityTestimony;
 use \WilliamCosta\DatabaseManager\Pagination;
 
