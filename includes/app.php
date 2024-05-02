@@ -27,7 +27,9 @@ View::init([
 MiddlewareQueue::setMap([
     'maintenance' => \app\Http\Middleware\Maintenance::class,
     'required-admin-logout' => \app\Http\Middleware\RequireAdminLogout::class,
-    'required-admin-login' => \app\Http\Middleware\RequireAdminLogin::class
+    'required-admin-login' => \app\Http\Middleware\RequireAdminLogin::class,
+    'api' => \app\Http\Middleware\Api::class,
+    'user-basic-auth' => \app\Http\Middleware\UserBasicAuth::class
 ]);
 
 //DEFINE O MAPEAMENTO DE MIDDLEWARES PADROES (EXECUTADOS EM TODAS AS ROTAS)

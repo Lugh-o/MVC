@@ -31,6 +31,7 @@ class Testimony extends Page{
        
         while($obTestimony = $results->fetchObject(EntityTestimony::class)){
             $items .= View::render('pages/testimony/item',[
+                'id' => $obTestimony->id,
                 'nome' => $obTestimony->nome,
                 'mensagem' => $obTestimony->mensagem,
                 'data' => date('d/m/Y H:i:s', strtotime($obTestimony->data))
