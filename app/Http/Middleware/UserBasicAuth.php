@@ -30,6 +30,7 @@ class UserBasicAuth {
     /**
      * Metodo repsonsavel por validar o acesso via HTTP BASIC AUTH
      * @param Request $request
+     * @return boolean
      */
     private function basicAuth($request) {
         if($obUser = $this->getBasicAuthUser()){
