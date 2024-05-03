@@ -220,5 +220,4 @@ class User extends Page {
         //redireciona o usuario
        $request->getRouter()->redirect('/admin/users?status=deleted');  
     }
-
 }

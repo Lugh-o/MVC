@@ -2,6 +2,9 @@
 
 namespace app\Controller\Api;
 
+use app\Http\Request;
+use WilliamCosta\DatabaseManager\Pagination;
+
 class Api {
 
     /**
@@ -34,5 +37,4 @@ class Api {
             'quantidadePaginas' => !empty($pages) ? count($pages) : 1
         ];
     }
-
 }

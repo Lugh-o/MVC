@@ -18,5 +18,4 @@ class Api {
 
         return $next($request);
     }
-
 }

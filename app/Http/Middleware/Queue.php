@@ -19,7 +19,6 @@ class Queue {
      */
     private static $default = [];	
 
-
     /**
      * Fila de middlewares a serem executados
      * @var array
@@ -58,14 +57,13 @@ class Queue {
         self::$map = $map;
     }
 
-        /**
+    /**
      * Metodo responsavel por definir o mapeamento de middlewares
      * @param array $default
      */
     public static function setDefault($default) {
         self::$default = $default;
     }
-
 
     /**
      * Metodo responsavel por executar o proximo nivel da fila de middlewares
@@ -92,8 +90,5 @@ class Queue {
 
         //executa o middleware
         return (new self::$map[$middleware])->handle($request, $next);
-
-
     }
-
 }

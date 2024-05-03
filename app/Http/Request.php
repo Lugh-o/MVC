@@ -69,7 +69,6 @@ class Request {
         //remove gets da uri
         $xURI = explode('?', $this->uri);
         $this->uri = $xURI[0];
-
     }
 
     /**

@@ -5,6 +5,9 @@ use \app\Controller\pages;
 
 //rota home
 $obRouter->get('/', [
+    'middlewares' => [
+        'cache'
+    ],
     function(){
         return new Response(200, Pages\Home::getHome());
     }
@@ -12,6 +15,9 @@ $obRouter->get('/', [
 
 //rota sobre
 $obRouter->get('/sobre', [
+    'middlewares' => [
+        'cache'
+    ],
     function(){
         return new Response(200, Pages\About::getAbout());
     }
@@ -19,6 +25,9 @@ $obRouter->get('/sobre', [
 
 //rota depoimentos
 $obRouter->get('/depoimentos', [
+    'middlewares' => [
+        'cache'
+    ],
     function($request){
         return new Response(200, Pages\Testimony::getTestimonies($request));
     }
@@ -30,4 +39,3 @@ $obRouter->post('/depoimentos', [
         return new Response(200, Pages\Testimony::insertTestimony($request));
     }
 ]);
-

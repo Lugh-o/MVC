@@ -2,6 +2,7 @@
 
 namespace app\Controller\Api;
 
+use app\Http\Request;
 use app\Model\Entity\User;
 use \Firebase\JWT\JWT;
 

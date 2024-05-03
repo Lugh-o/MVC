@@ -18,7 +18,6 @@ class Alert {
         ]);
     }
 
-
     /**
      * Método responsável por retornar uma mensagem de sucesso
      * @param string $message

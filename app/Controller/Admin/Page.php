@@ -8,7 +8,7 @@ use \WilliamCosta\DatabaseManager\Pagination;
 
 class Page{
 
-/**
+    /**
      * Método responsável por renderizar o layout de paginação
      * @param Request
      * @param Pagination
@@ -96,7 +96,6 @@ class Page{
             ]);
         }
 
-
         return View::render('admin/menu/box',[
             'links' => $links
         ]); 
@@ -120,5 +119,4 @@ class Page{
         //retorna a pagina renderizada
         return self::getPage($title, $contentPanel);
     }
-
 }

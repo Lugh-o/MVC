@@ -24,6 +24,3 @@ class Organization {
      */
     public $description = 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Assumenda totam distinctio vel, beatae temporibus iure aliquid velit! Temporibus, corrupti maxime quaerat sint illo eveniet, exercitationem ipsum vitae, commodi cum recusandae?';
 }
-
-
-?>

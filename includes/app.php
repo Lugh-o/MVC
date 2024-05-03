@@ -30,8 +30,8 @@ MiddlewareQueue::setMap([
     'required-admin-login' => \app\Http\Middleware\RequireAdminLogin::class,
     'api' => \app\Http\Middleware\Api::class,
     'user-basic-auth' => \app\Http\Middleware\UserBasicAuth::class,
-    'jwt-auth' => \app\Http\Middleware\JWTAuth::class
-
+    'jwt-auth' => \app\Http\Middleware\JWTAuth::class,
+    'cache' => \app\Http\Middleware\Cache::class
 ]);
 
 //DEFINE O MAPEAMENTO DE MIDDLEWARES PADROES (EXECUTADOS EM TODAS AS ROTAS)

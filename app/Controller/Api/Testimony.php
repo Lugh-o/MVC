@@ -2,6 +2,7 @@
 
 namespace app\Controller\Api;
 
+use app\Http\Request;
 use \app\Model\Entity\Testimony as EntityTestimony;
 use \WilliamCosta\DatabaseManager\Pagination;
 
@@ -61,7 +62,6 @@ class Testimony extends Api {
         if(!is_numeric($id)){
             throw new \Exception("O id ".$id." nao e valido", 400);
         }
-
 
         $obTestimony = EntityTestimony::getTestimonyById($id);
         if(!$obTestimony instanceof EntityTestimony){
@@ -150,5 +150,4 @@ class Testimony extends Api {
             'sucesso' => true
         ];
     }
-
 }

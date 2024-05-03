@@ -86,13 +86,10 @@ class Router {
         
         $patternVariable = '/{(.*?)}/';
 
-
         if(preg_match_all($patternVariable, $route, $matches)){
             $route = preg_replace($patternVariable, '(.*?)', $route);
             $params['variables'] = $matches[1];
         }
-
-        
 
         $patternRoute = '/^'.str_replace('/', '\/', $route).'$/';
 
@@ -140,7 +137,7 @@ class Router {
      * Método responsável por retornar a URI desconsiderando o prefixo
      * @return string
      */
-    private function getUri(){
+    public function getUri(){
         $uri = $this->request->getUri();
         $xUri = strlen($this->prefix) ? explode($this->prefix, $uri) : [$uri];
         return rtrim(end($xUri), '/') == '' ? end($xUri) : rtrim(end($xUri), '/'); 
@@ -171,7 +168,6 @@ class Router {
             }
         }
         throw new Exception("URL não encontrada", 404);
-
     }
 
     /**
@@ -217,9 +213,7 @@ class Router {
             default:
                 return $message;
         }
-
     }
-
 
     /**
      * Método responsável por retornar a URL atual
@@ -240,5 +234,4 @@ class Router {
         header('location: ' .$url);
         exit;
     }
- 
 }

@@ -22,7 +22,4 @@ class RequireAdminLogout {
         //continua a execução
         return $next($request);
     }
-
-
-
 }

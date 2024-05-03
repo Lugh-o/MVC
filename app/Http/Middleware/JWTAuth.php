@@ -20,7 +20,6 @@ class JWTAuth {
 
         //token jwt puro
         $jwt = isset($headers['Authorization']) ? str_replace('Bearer ', '', $headers['Authorization']) : '';
-
         
         $decode = (array)JWT::decode($jwt, new Key(getenv('JWT_KEY'), 'HS256'));
         try {
@@ -61,5 +60,4 @@ class JWTAuth {
 
         return $next($request);
     }
-
 }

@@ -17,6 +17,4 @@ class Home extends Page {
 
         return parent::getPanel('Home -> WDEV', $content, 'home');   
     }
-
-
 }

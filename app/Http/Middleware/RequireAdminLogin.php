@@ -22,7 +22,4 @@ class RequireAdminLogin {
         //continua a execução
         return $next($request);
     }
-
-
-
 }

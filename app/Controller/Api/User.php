@@ -2,6 +2,7 @@
 
 namespace app\Controller\Api;
 
+use app\Http\Request;
 use \app\Model\Entity\User as EntityUser;
 use \WilliamCosta\DatabaseManager\Pagination;
 
@@ -117,7 +118,7 @@ class User extends Api {
         return [
             'id' => (int)$obUser->id,
             'nome' => $obUser->nome,
-            'mensagem' => $obUser->email
+            'email' => $obUser->email
         ];
     }
 

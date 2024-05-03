@@ -50,7 +50,6 @@ class Testimony {
      * @return boolean
      */
     public function atualizar(){
-
         return (new Database('depoimentos'))->update('id = '.$this->id, [
             'nome'=> $this->nome,
             'mensagem'=>$this->mensagem,
@@ -80,7 +79,7 @@ class Testimony {
      * @param string $order
      * @param string $limit
      * @param string $field
-     * @return PDOStatement
+     * @return mixed
      */
     public static function getTestimonies($where = null, $order = null, $limit = null, $fields = '*'){
         return (new Database('depoimentos'))->select($where, $order, $limit, $fields);

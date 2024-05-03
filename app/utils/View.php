@@ -45,5 +45,4 @@ class View{
 
         return str_replace($keys, array_values($vars), $contentView);
     }
-
 }

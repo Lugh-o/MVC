@@ -3,7 +3,6 @@
 use \app\Http\Response;
 use \app\Controller\Api;
 
-
 //rota raiz da api
 $obRouter->get('/api/v1', [
     'middlewares' => [

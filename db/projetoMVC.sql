@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Tempo de geração: 24/04/2024 às 20:26
+-- Tempo de geração: 28/04/2024 às 23:04
 -- Versão do servidor: 8.3.0
 -- Versão do PHP: 8.2.8
 
@@ -47,8 +47,11 @@ INSERT INTO `depoimentos` (`id`, `nome`, `mensagem`, `data`) VALUES
 (6, 'aaaaaaaaaa', 'aaaaaaaaaaaaaaaaa', '2024-04-20 18:24:43'),
 (7, 'teste', 'teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste', '2024-04-20 18:27:24'),
 (8, ' teste teste teste teste', ' teste teste teste teste teste teste teste teste teste teste testevv teste teste teste teste teste teste teste teste', '2024-04-20 18:27:32'),
-(9, ' teste teste teste teste', ' teste teste teste teste teste teste teste teste teste teste testevv teste teste teste teste teste teste teste teste', '2024-04-20 18:27:48'),
-(10, 'oi', 'oi\r\n', '2024-04-24 17:03:40');
+(10, 'oi', 'oi\r\n', '2024-04-24 17:03:40'),
+(11, 'Olá', 'olá mundo', '2024-04-26 21:19:14'),
+(14, 'Testando admin', 'testando admin', '2024-04-27 18:16:32'),
+(17, 'lucas', 'testandp\r\n', '2024-04-28 14:54:45'),
+(18, 'teste', 'teste', '2024-04-28 14:57:04');
 
 -- --------------------------------------------------------
 
@@ -68,7 +71,9 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`) VALUES
-(1, 'Lucas Falcão', 'lughfalcao@gmail.com', '$2y$10$/3pVUDDuayix5OTe4lrkX.0PS.W7jy7PCp9t9htJsIkJCJ5C90WUK');
+(1, 'Lucas Falcão', 'lughfalcao@gmail.com', '$2y$10$u4S16fnMQUFdEN9VarRN2.mq0gbXRDGHSxmlVokC3r.LyJjCYmiYe'),
+(5, 'Maria Luisa', 'maria@gmail.com', '$2y$10$PBAxaQHbjEWRIfWTdOQQm.Sy3VsTSwHqgtSTzqQ/hfLuSPZo3O2yW'),
+(6, 'teste', 'teste@teste', '$2y$10$4v5w9t7xkj2o2UexJxWUsOHYXjvoXcwsa7nWtVHEfDaBKmFmiYA06');
 
 --
 -- Índices para tabelas despejadas
@@ -95,13 +100,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `depoimentos`
 --
 ALTER TABLE `depoimentos`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

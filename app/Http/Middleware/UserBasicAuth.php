@@ -22,8 +22,8 @@ class UserBasicAuth {
         if(!$obUser instanceof User){
             return false;
         }
+
         //Valida a senha e retorna o usuario
-        
         return password_verify($_SERVER['PHP_AUTH_PW'], $obUser->senha) ? $obUser : false;
     }   
 
@@ -49,8 +49,6 @@ class UserBasicAuth {
     public function handle($request, $next) {
         $this->basicAuth($request);
 
-
         return $next($request);
     }
-
 }

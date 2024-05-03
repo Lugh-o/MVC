@@ -1,6 +1,5 @@
 <?php 
 
-
 use \app\Http\Response;
 use \app\Controller\Admin;
 

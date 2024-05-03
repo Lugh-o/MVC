@@ -104,7 +104,9 @@ class Testimony extends Page {
             case 'updated':
                 return Alert::getSuccess('Depoimento atualizado com sucesso');
             case 'deleted':
-                return Alert::getSuccess('Depoimento excluído com sucesso');              
+                return Alert::getSuccess('Depoimento excluído com sucesso');   
+            default:
+                return '';           
         }
     }
 
@@ -200,5 +202,4 @@ class Testimony extends Page {
         //redireciona o usuario
        $request->getRouter()->redirect('/admin/testimonies?status=deleted');  
     }
-
 }
