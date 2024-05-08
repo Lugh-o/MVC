@@ -33,23 +33,64 @@ class Page{
         //GET
         $queryParams = $request->getQueryParams();
         
-        foreach($pages as $page){
-            //altera a pagina
-            $queryParams['page'] = $page['page'];
+        $currentPage = $queryParams['page'] ?? 1;
+        
+        $limit = getenv('PAGINATION_LIMIT');
 
-            $link = $url.'?'.http_build_query($queryParams);
-            
-            $links .= View::render('pages/pagination/link',[
-                'page' => $page['page'],
-                'link' => $link,
-                'active' => $page['current'] ? 'active' : ''
-            ]);
+        //inicio da paginação
+        $middle = ceil($limit/2);
+        $start = $middle > $currentPage ? 0 : $currentPage - $middle;
+
+        //ajusta o final da paginação
+        $limit += $start;
+
+        //ajusta o inicio
+        if($limit > count($pages)){
+            $diff = $limit - count($pages);
+            $start -= $diff;
+        }
+
+        if($start > 0){
+            $links .= self::getPaginationLink($queryParams, $url, reset($pages), '<<');
+
+        }
+
+
+        foreach($pages as $page){
+            //verifica o start da paginação
+            if($page['page'] <= $start) continue;
+
+            if($page['page'] > $limit) {
+                $links .= self::getPaginationLink($queryParams, $url, end($pages), '>>');
+                break;
+            }
+
+            $links .= self::getPaginationLink($queryParams, $url, $page);
         }
 
         return View::render('pages/pagination/box',[
             'links' => $links
         ]);
+    }
 
+    /**
+     * Método responsável por retornar um link da paginação
+     * @param array $queryParams
+     * @param array $page
+     * @param string $url
+     * @return string
+     */
+    private static function getPaginationLink($queryParams, $url, $page, $label = null){
+
+        $queryParams['page'] = $page['page'];
+
+        $link = $url.'?'.http_build_query($queryParams);
+        
+        return View::render('pages/pagination/link',[
+            'page' => $label ?? $page['page'],
+            'link' => $link,
+            'active' => $page['current'] ? 'active' : ''
+        ]);
     }
 
     /**
