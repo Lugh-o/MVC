@@ -32,10 +32,10 @@ Toda a documentação da API foi feita utilizando o Swagger, e você pode acess�
 https://lugh-o.github.io/projetoMVC/
 ## Tecnologias utilizadas
 ### Front End
-- ``HTML/CSS``
-- ``Bootstrap``
+- ``HTML 5/CSS 3``
+- ``Bootstrap 5``
 ### Back End
-- ``PHP``
+- ``PHP 8``
 - ``MySQL``
 ### Outros
 - ``Docker``
