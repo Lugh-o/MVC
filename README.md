@@ -29,6 +29,7 @@ O arquivo .env está presente no repositório pois esse é um projeto apenas com
 ## Documentação da API
 
 Toda a documentação da API foi feita utilizando o Swagger, e você pode acessá-la link a seguir:
+https://lugh-o.github.io/projetoMVC/
 ## Tecnologias utilizadas
 ### Front End
 - ``HTML/CSS``
