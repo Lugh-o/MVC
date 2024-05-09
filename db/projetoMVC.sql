@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db:3306
--- Tempo de geração: 28/04/2024 às 23:04
+-- Tempo de geração: 09/05/2024 às 16:54
 -- Versão do servidor: 8.3.0
 -- Versão do PHP: 8.2.8
 
@@ -29,8 +29,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `depoimentos` (
   `id` int NOT NULL,
-  `nome` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `mensagem` text COLLATE utf8mb4_general_ci NOT NULL,
+  `nome` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `mensagem` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `data` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -39,19 +39,7 @@ CREATE TABLE `depoimentos` (
 --
 
 INSERT INTO `depoimentos` (`id`, `nome`, `mensagem`, `data`) VALUES
-(1, 'dasdasdasd', 'asdasdasda', '2024-04-19 12:12:18'),
-(2, 'sdfsdf', 'fdsfsdf', '2024-04-19 15:48:20'),
-(3, 'Lucas', 'Hello Word', '2024-04-19 15:57:15'),
-(4, 'asdasdasd', 'asdasdasd', '2024-04-19 15:57:23'),
-(5, 'Teste Teste', 'Teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste', '2024-04-20 18:24:20'),
-(6, 'aaaaaaaaaa', 'aaaaaaaaaaaaaaaaa', '2024-04-20 18:24:43'),
-(7, 'teste', 'teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste teste', '2024-04-20 18:27:24'),
-(8, ' teste teste teste teste', ' teste teste teste teste teste teste teste teste teste teste testevv teste teste teste teste teste teste teste teste', '2024-04-20 18:27:32'),
-(10, 'oi', 'oi\r\n', '2024-04-24 17:03:40'),
-(11, 'Olá', 'olá mundo', '2024-04-26 21:19:14'),
-(14, 'Testando admin', 'testando admin', '2024-04-27 18:16:32'),
-(17, 'lucas', 'testandp\r\n', '2024-04-28 14:54:45'),
-(18, 'teste', 'teste', '2024-04-28 14:57:04');
+(1, 'Nome', 'Comentario', '2024-05-09 16:51:41');
 
 -- --------------------------------------------------------
 
@@ -61,9 +49,9 @@ INSERT INTO `depoimentos` (`id`, `nome`, `mensagem`, `data`) VALUES
 
 CREATE TABLE `usuarios` (
   `id` int NOT NULL,
-  `nome` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `senha` varchar(255) COLLATE utf8mb4_general_ci NOT NULL
+  `nome` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `senha` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -71,9 +59,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`) VALUES
-(1, 'Lucas Falcão', 'lughfalcao@gmail.com', '$2y$10$u4S16fnMQUFdEN9VarRN2.mq0gbXRDGHSxmlVokC3r.LyJjCYmiYe'),
-(5, 'Maria Luisa', 'maria@gmail.com', '$2y$10$PBAxaQHbjEWRIfWTdOQQm.Sy3VsTSwHqgtSTzqQ/hfLuSPZo3O2yW'),
-(6, 'teste', 'teste@teste', '$2y$10$4v5w9t7xkj2o2UexJxWUsOHYXjvoXcwsa7nWtVHEfDaBKmFmiYA06');
+(1, 'admin', 'admin@admin', '$2y$10$pITY.iDEpoVR34s4Cmj3pOO.YvjHqEqLYQ8lWljBtgSETZu0FT77y');
 
 --
 -- Índices para tabelas despejadas
@@ -100,7 +86,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `depoimentos`
 --
 ALTER TABLE `depoimentos`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
