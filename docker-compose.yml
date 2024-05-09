@@ -22,8 +22,7 @@ services:
       - MYSQL_DATABASE=projetoMVC
       - MYSQL_PASSWORD=password
     volumes:
-      - "./db:/docker-entrypoint-initdb.d/projetoMVC.sql" # this is how we persist a sql db even when container stops
-      
+      - ./db:/docker-entrypoint-initdb.d
   phpmyadmin:
     container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin
