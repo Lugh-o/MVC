@@ -21,12 +21,11 @@ class JWTAuth {
         //token jwt puro
         $jwt = isset($headers['Authorization']) ? str_replace('Bearer ', '', $headers['Authorization']) : '';
         
-        $decode = (array)JWT::decode($jwt, new Key(getenv('JWT_KEY'), 'HS256'));
         try {
+            $decode = (array)JWT::decode($jwt, new Key(getenv('JWT_KEY'), 'HS256'));
         } catch (\Exception $e) {
             throw new \Exception("Token invalido", 403);
         }
-
 
         $email = $decode['email'] ?? '';
 

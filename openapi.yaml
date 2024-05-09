@@ -6,22 +6,21 @@ info:
     
     Some useful links:
     - [Playlist no Youtube](https://www.youtube.com/playlist?list=PL_zkXQGHYosGQwNkMMdhRZgm4GjspTnXs)
-
   contact:
     email: lughfalcao@gmail.com
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: 1.0.
-  
+  version: 1.0.0
 tags:
   - name: api
     description: API info
+  - name: auth
+    description: JWT Token generator
   - name: testimonies
     description: Operations about Testimonies
-  - name: User
+  - name: users
     description: Operations about users
-    
 paths:
   /api/v1:
     get:
@@ -30,21 +29,60 @@ paths:
       summary: Get API information
       description: Get API information
       operationId: getAPI
-
       responses:
         '200':
           description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/API'          
+                $ref: '#/components/schemas/API'   
+  /api/v1/auth:
+    post:
+      tags:
+        - auth
+      summary: redeem JWT token
+      description: redeem JWT token by logging in as an admin
+      requestBody:
+        description: admin credentials
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: email@email.com
+                senha:
+                  type: string
+                  example: password
+      responses:
+        '201':
+          description: token created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token: 
+                    type: string
+                    example: xxxx.yyyy.zzzz
+        '400':
+          description: invalid user or password
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: 
+                    type: string
+                    example: O usuario ou senha sao invalidos
   /api/v1/testimonies:
     get:
       tags:
         - testimonies
       summary: Returns all testimonies
-      description: Returns all testimonies, the output shows five per page
-      operationID: getTestimonies
+      description: Returns all testimonies, and the instance of pagination
       parameters:
       - name: page
         in: query
@@ -52,228 +90,149 @@ paths:
         required: false
         explode: true
         schema:
-          type: int
+          type: integer
           default: 1
       responses:
         '200':
-          description:
-      
-
-
-  /pet/findByStatus:
-    get:
-      tags:
-        - pet
-      summary: Finds Pets by status
-      description: Multiple status values can be provided with comma separated strings
-      operationId: findPetsByStatus
-      parameters:
-        - name: status
-          in: query
-          description: Status values that need to be considered for filter
-          required: false
-          explode: true
-          schema:
-            type: string
-            default: available
-            enum:
-              - available
-              - pending
-              - sold
-      responses:
-        '200':
           description: successful operation
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Pet'          
-            application/xml:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Pet'
-        '400':
-          description: Invalid status value
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
-  /pet/findByTags:
-    get:
-      tags:
-        - pet
-      summary: Finds Pets by tags
-      description: Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
-      operationId: findPetsByTags
-      parameters:
-        - name: tags
-          in: query
-          description: Tags to filter by
-          required: false
-          explode: true
-          schema:
-            type: array
-            items:
-              type: string
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Pet'          
-            application/xml:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Pet'
-        '400':
-          description: Invalid tag value
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
-  /pet/{petId}:
-    get:
-      tags:
-        - pet
-      summary: Find pet by ID
-      description: Returns a single pet
-      operationId: getPetById
-      parameters:
-        - name: petId
-          in: path
-          description: ID of pet to return
-          required: true
-          schema:
-            type: integer
-            format: int64
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Pet'          
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Pet'
-        '400':
-          description: Invalid ID supplied
-        '404':
-          description: Pet not found
-      security:
-        - api_key: []
-        - petstore_auth:
-            - write:pets
-            - read:pets
+                  $ref: '#/components/schemas/Testimonies'
     post:
       tags:
-        - pet
-      summary: Updates a pet in the store with form data
-      description: ''
-      operationId: updatePetWithForm
+        - testimonies
+      summary: Posts a new testimony
+      description: Posts a new testimony, and then returns it
+      requestBody:
+        description: new testimony
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/newTestimony'
+      security: 
+        - bearerAuth: []
+      responses:
+        '201':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Testimony'
+        '400':
+          description: required fields not filled
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Os campos 'nome' e 'mensagem' sao obrigatorios"
+        '403':
+          description: invalid jwt token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+  /api/v1/testimonies/{id}:
+    get:
+      tags:
+        - testimonies
+      summary: Returns testimony by id
       parameters:
-        - name: petId
-          in: path
-          description: ID of pet that needs to be updated
-          required: true
+        - in: path
+          name: id
           schema:
             type: integer
-            format: int64
-        - name: name
-          in: query
-          description: Name of pet that needs to be updated
-          schema:
-            type: string
-        - name: status
-          in: query
-          description: Status of pet that needs to be updated
-          schema:
-            type: string
+          required: true
+          description: Numeric id of the testimony to get
       responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Testimony'
         '400':
-          description: Invalid input
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+          description: invalid id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "O id nao e valido"
+        '404':
+          description: testimony not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "O depoimento 1 nao foi encontrado"
+    put:
+      tags:
+        - testimonies
+      summary: Updates a testimony
+      requestBody:
+        description: new testimony
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/newTestimony'
+      security: 
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric id of the testimony to get
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Testimony'
+        '400':
+          description: required fields not filled
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Os campos 'nome' e 'mensagem' sao obrigatorios"
+        '403':
+          description: invalid jwt token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
     delete:
       tags:
-        - pet
-      summary: Deletes a pet
-      description: delete a pet
-      operationId: deletePet
+        - testimonies
+      summary: Deletes a testimony
+      security: 
+        - bearerAuth: []
       parameters:
-        - name: api_key
-          in: header
-          description: ''
-          required: false
-          schema:
-            type: string
-        - name: petId
-          in: path
-          description: Pet id to delete
-          required: true
+        - in: path
+          name: id
           schema:
             type: integer
-            format: int64
-      responses:
-        '400':
-          description: Invalid pet value
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
-  /pet/{petId}/uploadImage:
-    post:
-      tags:
-        - pet
-      summary: uploads an image
-      description: ''
-      operationId: uploadFile
-      parameters:
-        - name: petId
-          in: path
-          description: ID of pet to update
           required: true
-          schema:
-            type: integer
-            format: int64
-        - name: additionalMetadata
-          in: query
-          description: Additional Metadata
-          required: false
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/octet-stream:
-            schema:
-              type: string
-              format: binary
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
-  /store/inventory:
-    get:
-      tags:
-        - store
-      summary: Returns pet inventories by status
-      description: Returns a map of status codes to quantities
-      operationId: getInventory
+          description: Numeric id of the testimony to get
       responses:
         '200':
           description: successful operation
@@ -281,272 +240,238 @@ paths:
             application/json:
               schema:
                 type: object
-                additionalProperties:
-                  type: integer
-                  format: int32
-      security:
-        - api_key: []
-  /store/order:
-    post:
+                properties:
+                  sucesso:
+                    type: boolean
+                    example: true
+        '403':
+          description: invalid jwt token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: testimony not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "O depoimento 1 nao foi encontrado"
+  /api/v1/users:
+    get:
       tags:
-        - store
-      summary: Place an order for a pet
-      description: Place a new order in the store
-      operationId: placeOrder
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Order'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/Order'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Order'
+        - users
+      summary: Returns all users
+      security: 
+        - bearerAuth: []
+      description: Returns all users, and the instance of pagination
+      parameters:
+      - name: page
+        in: query
+        description: Select the current page shown.
+        required: false
+        explode: true
+        schema:
+          type: integer
+          default: 1
       responses:
         '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Users'
+    post:
+      tags:
+        - users
+      summary: Sign up a new user
+      description: Sign up a new user, and then returns it
+      security: 
+        - bearerAuth: []
+      requestBody:
+        description: new user
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/newUser'
+      responses:
+        '201':
+          description: user created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
         '400':
-          description: Invalid input
-        '422':
-          description: Validation exception
-  /store/order/{orderId}:
+          description: required fields not filled
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Os campos 'nome', 'email' e 'senha' sao obrigatorios"
+        '403':
+          description: invalid jwt token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+              
+  /api/v1/users/me:
     get:
       tags:
-        - store
-      summary: Find purchase order by ID
-      description: For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.
-      operationId: getOrderById
+        - users
+      summary: Returns current user 
+      security: 
+        - bearerAuth: []
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'    
+        '403':
+          description: invalid jwt token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+  /api/v1/users/{id}:
+    get:
+      tags:
+        - users
+      summary: Returns user by id
       parameters:
-        - name: orderId
-          in: path
-          description: ID of order that needs to be fetched
-          required: true
+        - in: path
+          name: id
           schema:
             type: integer
-            format: int64
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Order'          
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Order'
-        '400':
-          description: Invalid ID supplied
-        '404':
-          description: Order not found
-    delete:
-      tags:
-        - store
-      summary: Delete purchase order by ID
-      description: For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
-      operationId: deleteOrder
-      parameters:
-        - name: orderId
-          in: path
-          description: ID of the order that needs to be deleted
           required: true
-          schema:
-            type: integer
-            format: int64
+          description: Numeric id of the user to get
       responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
         '400':
-          description: Invalid ID supplied
+          description: invalid id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "O id nao e valido"
         '404':
-          description: Order not found
-  /user:
-    post:
-      tags:
-        - user
-      summary: Create user
-      description: This can only be done by the logged in user.
-      operationId: createUser
-      requestBody:
-        description: Created user object
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/User'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/User'
-      responses:
-        default:
-          description: successful operation
+          description: user not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/User'
-  /user/createWithList:
-    post:
-      tags:
-        - user
-      summary: Creates list of users with given input array
-      description: Creates list of users with given input array
-      operationId: createUsersWithListInput
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/User'
-      responses:
-        '200':
-          description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'          
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/User'
-        default:
-          description: successful operation
-  /user/login:
-    get:
-      tags:
-        - user
-      summary: Logs user into the system
-      description: ''
-      operationId: loginUser
-      parameters:
-        - name: username
-          in: query
-          description: The user name for login
-          required: false
-          schema:
-            type: string
-        - name: password
-          in: query
-          description: The password for login in clear text
-          required: false
-          schema:
-            type: string
-      responses:
-        '200':
-          description: successful operation
-          headers:
-            X-Rate-Limit:
-              description: calls per hour allowed by the user
-              schema:
-                type: integer
-                format: int32
-            X-Expires-After:
-              description: date in UTC when token expires
-              schema:
-                type: string
-                format: date-time
-          content:
-            application/xml:
-              schema:
-                type: string
-            application/json:
-              schema:
-                type: string
-        '400':
-          description: Invalid username/password supplied
-  /user/logout:
-    get:
-      tags:
-        - user
-      summary: Logs out current logged in user session
-      description: ''
-      operationId: logoutUser
-      parameters: []
-      responses:
-        default:
-          description: successful operation
-  /user/{username}:
-    get:
-      tags:
-        - user
-      summary: Get user by user name
-      description: ''
-      operationId: getUserByName
-      parameters:
-        - name: username
-          in: path
-          description: 'The name that needs to be fetched. Use user1 for testing. '
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'          
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/User'
-        '400':
-          description: Invalid username supplied
-        '404':
-          description: User not found
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "O usuario 1 nao foi encontrado"
     put:
       tags:
-        - user
-      summary: Update user
-      description: This can only be done by the logged in user.
-      operationId: updateUser
-      parameters:
-        - name: username
-          in: path
-          description: name that need to be deleted
-          required: true
-          schema:
-            type: string
+        - users
+      summary: Updates a user
       requestBody:
-        description: Update an existent user in the store
+        description: new user
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/User'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/User'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/User'
+              $ref: '#/components/schemas/newUser'
+      security: 
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: Numeric id of the user to get
       responses:
-        default:
+        '200':
           description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: required fields not filled
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Os campos 'nome', 'email' e 'senha' sao obrigatorios"
+        '403':
+          description: invalid jwt token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
     delete:
       tags:
-        - user
-      summary: Delete user
-      description: This can only be done by the logged in user.
-      operationId: deleteUser
+        - users
+      summary: Deletes a user
+      security: 
+        - bearerAuth: []
       parameters:
-        - name: username
-          in: path
-          description: The name that needs to be deleted
-          required: true
+        - in: path
+          name: id
           schema:
-            type: string
+            type: integer
+          required: true
+          description: Numeric id of the user to get
       responses:
-        '400':
-          description: Invalid username supplied
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sucesso:
+                    type: boolean
+                    example: true
+        '403':
+          description: invalid jwt token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
         '404':
-          description: User not found
+          description: user not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "O usuario 1 nao foi encontrado"
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT    
   schemas:
     API:
       type: object
@@ -563,204 +488,92 @@ components:
         email:
           type: string
           example: "lughfalcao@gmail.com"
-    Order:
+    Testimonies:
       type: object
       properties:
-        id:
-          type: integer
-          format: int64
-          example: 10
-        petId:
-          type: integer
-          format: int64
-          example: 198772
-        quantity:
-          type: integer
-          format: int32
-          example: 7
-        shipDate:
-          type: string
-          format: date-time
-        status:
-          type: string
-          description: Order Status
-          example: approved
-          enum:
-            - placed
-            - approved
-            - delivered
-        complete:
-          type: boolean
-      xml:
-        name: order
-    Customer:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 100000
-        username:
-          type: string
-          example: fehguy
-        address:
+        depoimentos: 
           type: array
-          xml:
-            name: addresses
-            wrapped: true
           items:
-            $ref: '#/components/schemas/Address'
-      xml:
-        name: customer
-    Address:
-      type: object
-      properties:
-        street:
-          type: string
-          example: 437 Lytton
-        city:
-          type: string
-          example: Palo Alto
-        state:
-          type: string
-          example: CA
-        zip:
-          type: string
-          example: '94301'
-      xml:
-        name: address
-    Category:
+            oneOf:
+              - $ref: '#/components/schemas/Testimony'
+              - $ref: '#/components/schemas/Testimony'
+        paginacao: 
+            $ref: '#/components/schemas/Pagination'
+    Testimony:
       type: object
       properties:
         id:
           type: integer
           format: int64
           example: 1
-        name:
+        nome:
           type: string
-          example: Dogs
-      xml:
-        name: category
+          example: Lucas Falcao
+        mensagem:
+          type: string
+          example: Hello World
+        data:
+          type: string
+          example: 2024-05-09 08:45:15        
+    newTestimony:
+      type: object
+      properties:
+        nome:
+          type: string
+          example: Lucas Falcao
+        mensagem:
+          type: string
+          example: Hello World
+    Users:
+      type: object
+      properties:
+        usuarios: 
+          type: array
+          items:
+            oneOf:
+              - $ref: '#/components/schemas/User'
+              - $ref: '#/components/schemas/User'
+        paginacao: 
+            $ref: '#/components/schemas/Pagination'
     User:
       type: object
       properties:
         id:
           type: integer
           format: int64
-          example: 10
-        username:
+          example: 1
+        nome:
           type: string
-          example: theUser
-        firstName:
-          type: string
-          example: John
-        lastName:
-          type: string
-          example: James
+          example: Lucas Falcao
         email:
           type: string
-          example: john@email.com
-        password:
+          example: email@email.com
+    newUser:
+      type: object
+      properties:
+        nome:
           type: string
-          example: '12345'
-        phone:
+          example: Lucas Falcao
+        email:
           type: string
-          example: '12345'
-        userStatus:
+          example: email@email.com
+        senha:
+          type: string
+          example: password
+    Pagination: 
+      type: object
+      properties:
+        paginaAtual:
           type: integer
-          description: User Status
-          format: int32
+          format: int64
           example: 1
-      xml:
-        name: user
-    Tag:
-      type: object
-      properties:
-        id:
+        quantidadePaginas:
           type: integer
           format: int64
-        name:
-          type: string
-      xml:
-        name: tag
-    Pet:
-      required:
-        - name
-        - photoUrls
+          example: 6
+    UnauthorizedError:
       type: object
       properties:
-        id:
-          type: integer
-          format: int64
-          example: 10
-        name:
+        error:
           type: string
-          example: doggie
-        category:
-          $ref: '#/components/schemas/Category'
-        photoUrls:
-          type: array
-          xml:
-            wrapped: true
-          items:
-            type: string
-            xml:
-              name: photoUrl
-        tags:
-          type: array
-          xml:
-            wrapped: true
-          items:
-            $ref: '#/components/schemas/Tag'
-        status:
-          type: string
-          description: pet status in the store
-          enum:
-            - available
-            - pending
-            - sold
-      xml:
-        name: pet
-    ApiResponse:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        type:
-          type: string
-        message:
-          type: string
-      xml:
-        name: '##default'
-  requestBodies:
-    Pet:
-      description: Pet object that needs to be added to the store
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Pet'
-        application/xml:
-          schema:
-            $ref: '#/components/schemas/Pet'
-    UserArray:
-      description: List of user object
-      content:
-        application/json:
-          schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/User'
-  securitySchemes:
-    petstore_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: https://petstore3.swagger.io/oauth/authorize
-          scopes:
-            write:pets: modify pets in your account
-            read:pets: read your pets
-    api_key:
-      type: apiKey
-      name: api_key
-      in: header
+          example: "Token Inválido"

@@ -15,6 +15,17 @@ $obRouter->get('/api/v1/users', [
     }
 ]);
 
+//rota de cadastro de usuarios
+$obRouter->post('/api/v1/users', [
+    'middlewares' => [
+        'api',
+        'jwt-auth'
+    ],
+    function($request){
+        return new Response(201, Api\User::setNewUser($request), 'application/json');
+    }
+]);
+
 //rota de consulta do usuario atual
 $obRouter->get('/api/v1/users/me', [
     'middlewares' => [
@@ -35,17 +46,6 @@ $obRouter->get('/api/v1/users/{id}', [
     ],
     function($request, $id){
         return new Response(200, Api\User::getUser($request, $id), 'application/json');
-    }
-]);
-
-//rota de cadastro de usuarios
-$obRouter->post('/api/v1/users', [
-    'middlewares' => [
-        'api',
-        'jwt-auth'
-    ],
-    function($request){
-        return new Response(201, Api\User::setNewUser($request), 'application/json');
     }
 ]);
 
